@@ -2,11 +2,42 @@
 
 1. [Introduction](#introduction)
 2. [Usage](#usage)
+   1. [Installation](#installation)
+   2. [Tutorial](#tutorial)
 3. [Sample](#sample)
+   1. [TSAppsee](#tsappsee_example)
+   2. [TSPackageManager](#tspackage_manager_example)
 
 # Introduction <a name="introduction"></a>
 
-# Installation of TSAnalytics Android
+### Purpose
+
+The purpose of this library is to provide a unified way to deal with analytics packages by providing standardized function signatures instead of having to deal with each individual package.
+
+For example: If I wanted to integrate Appcenter, Fabric, Adobe, and Appsee analytics all in the project, without a unified way to access and send off events to each package I would have to do the following...
+
+**this is an example that will not compile**
+
+```kotlin
+// will not compile
+Appsee.trackEvent(name: "someEvent", properties: myProps)
+Adobe.trackAction(name: "someEvent")
+Fabric.Answers.TrackActionEvent(name: "someEvent")
+```
+
+Scary stuff, look at that code replication...
+
+![alt gross](https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjU-7Lfl9neAhWFdN8KHe1eDT0QjRx6BAgBEAU&url=https%3A%2F%2Fimgflip.com%2Fi%2F11xlu3&psig=AOvVaw2Ke21s8_if7uhple1tJEdk&ust=1542467057507902)
+
+### Reasoning
+
+As you can see, there would be tons of code replication. An additional issue is if we want to remove a package that we no longer wish to use for analytics the nightmare and refactoring continues. Also, none of these packages are aware of the PII that may be sending nor is the developer aware.
+
+What if we could have one class that could manage and send all our events to all our packages and also be aware of PII?
+
+This is the aim of TSAnalytics: to allow easy integration of an analytics package without worrying about PII requirements, implementation, and management of each package. This is accomplished by having an overarching class that manages each package, the developer simply dispatches events and actions to the manager and the manager handles the rest. Each package is also assigned what PII it is allowed to track and any event that it is given that it cannot support, it will simply ignore the event however packages that can track the event will not ignore it.
+
+# Installation of TSAnalytics Android <a name="installation"></a>
 
 Add the following to your Project `build.gradle` file
 
