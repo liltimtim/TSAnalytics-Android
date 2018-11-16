@@ -4,6 +4,7 @@
 2. [Usage](#usage)
    1. [Installation](#installation)
    2. [Tutorial](#tutorial)
+   3. [Registering Package with Manager](#register_with_package_manager)
 3. [Sample](#sample)
    1. [TSAppsee](#tsappsee_example)
    2. [TSPackageManager](#tspackage_manager_example)
@@ -27,7 +28,7 @@ Fabric.Answers.TrackActionEvent(name: "someEvent")
 
 Scary stuff, look at that code replication...
 
-![alt gross](https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjU-7Lfl9neAhWFdN8KHe1eDT0QjRx6BAgBEAU&url=https%3A%2F%2Fimgflip.com%2Fi%2F11xlu3&psig=AOvVaw2Ke21s8_if7uhple1tJEdk&ust=1542467057507902)
+![alt gross](https://i.imgflip.com/11xlu3.jpg)
 
 ### Reasoning
 
@@ -81,6 +82,18 @@ These are all interfaces that unify the function signatures of Appsee hence why 
 The first step is to subclass `TSAnalyticsWrapper`. Create Kotlin file `TSAppsee.kt`. The class should look as follows
 
 ```kotlin
+package com.example.tdillman.testimportproject
+import com.appsee.Appsee
+import TSAnalyticsWrapper
+import TSUserTrackable
+import TSRecordable
+import TSActionTrackable
+import TSPIILevel
+import TSTrackable
+import TSTrackDataPoint
+import TSTrackableData
+import android.view.View
+
 class TSAppsee(override var _APIKey: String, override var handlesLevels: MutableList<TSPIILevel>,
                override var byspassesLevels: MutableList<TSPIILevel>?) : TSAnalyticsWrapper, TSUserTrackable, TSRecordable, TSActionTrackable {
 
@@ -89,47 +102,68 @@ class TSAppsee(override var _APIKey: String, override var handlesLevels: Mutable
     }
 
     override fun canTrack(item: TSTrackable): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return handlesLevels.contains(item.level) || byspassesLevels?.contains(item.level) ?: false
     }
 
     override fun canTrack(item: TSTrackDataPoint): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return handlesLevels.contains(item.level) || byspassesLevels?.contains(item.level) ?: false
     }
 
     override fun generate(item: TSTrackableData): Map<String, Any> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val gen: MutableMap<String, Any> = mutableMapOf<String, Any>()
+        item.values?.forEach {
+            if (canTrack(it)) {
+                if(it.value != null) {
+                    gen[it.key] = it.value!!
+                }
+            }
+        }
+        return gen
     }
 
     override fun set(userId: TSTrackDataPoint) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Appsee.setUserId(userId.key)
     }
 
     override fun setCurrent(screen: TSTrackDataPoint) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Appsee.startScreen(screen.key)
     }
 
     override fun markView(asSensitive: Boolean, view: Any) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val v = view as? View
+        if (v != null) {
+            Appsee.markViewAsSensitive(v)
+        }
     }
 
     override fun pauseRecording() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Appsee.stop()
     }
 
     override fun startRecording(resuming: Boolean) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (resuming) {
+            Appsee.resume()
+        } else {
+            Appsee.start()
+        }
     }
 
     override fun track(eventTrackable: TSTrackableData) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (canTrack(eventTrackable as TSTrackable)) {
+            Appsee.addEvent(eventTrackable.eventName, generate(eventTrackable))
+        }
     }
 
     override fun track(eventTrackable: TSTrackDataPoint) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (canTrack(eventTrackable)) {
+            Appsee.addEvent(eventTrackable.key)
+        }
     }
 
     override fun trackState(state: TSTrackableData) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        // Current State is not supported for Appsee
+        // This was the only specialty function needed for Adobe since Adobe is the only analytics package that
+        // has this feature.
     }
 
 }
@@ -181,5 +215,7 @@ override fun generate(item: TSTrackableData): Map<String, Any> {
 ```
 
 This now allows the generator to create a key, value pair. The reason why we must implement a generator per package is due to how certain packages handle the data. `Adobe` for example requires a different mapping structure than Appsee however since we want to unify the function signatures, we instead place the burden of implementation on the developer. This provides maximum flexibility in terms of what packages can be supported and prevents creating `one off` functions that are specific to a certain package.
+
+## Register TSAnalyticsWrapper subclass with TSPackageManager <a name="register_with_package_manager"></a>
 
 # Sample <a name="sample"></a>
