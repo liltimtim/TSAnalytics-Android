@@ -219,3 +219,5 @@ This now allows the generator to create a key, value pair. The reason why we mus
 ## Register TSAnalyticsWrapper subclass with TSPackageManager <a name="register_with_package_manager"></a>
 
 # Sample <a name="sample"></a>
+
+The following is a full implementation including the use of `TSAnalyticsManager` and a sample analytics package (Appsee)
