@@ -1,3 +1,11 @@
+# Table of Contents
+
+1. [Introduction](#introduction)
+2. [Usage](#usage)
+3. [Sample](#sample)
+
+# Introduction <a name="introduction"></a>
+
 # Installation of TSAnalytics Android
 
 Add the following to your Project `build.gradle` file
@@ -21,7 +29,7 @@ Then add the following to your App `build.gradle` file.
   }
 ```
 
-# Usage
+# Usage <a name="usage"></a>
 
 The library itself does not contain any specific implementation of how to deal with each analytics package. Its purpose is to unify the function signatures across all analytics packages.
 
@@ -163,3 +171,5 @@ override fun generate(item: TSTrackableData): Map<String, Any> {
 ```
 
 This now allows the generator to create a key, value pair. The reason why we must implement a generator per package is due to how certain packages handle the data. `Adobe` for example requires a different mapping structure than Appsee however since we want to unify the function signatures, we instead place the burden of implementation on the developer. This provides maximum flexibility in terms of what packages can be supported and prevents creating `one off` functions that are specific to a certain package.
+
+# Sample <a name="sample"></a>
