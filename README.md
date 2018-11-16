@@ -5,6 +5,7 @@
    1. [Installation](#installation)
    2. [Tutorial](#tutorial)
    3. [Registering Package with Manager](#register_with_package_manager)
+   4. [Tracking Events](#tracking_event_tsanalyticsmanager)
 3. [Sample](#sample)
    1. [TSAppsee](#tsappsee_example)
    2. [TSPackageManager](#tspackage_manager_example)
@@ -225,6 +226,63 @@ Its recommended by multiple analytics platforms that you instantiate the library
 You should use a subclasses version of `Application` to achieve this.
 
 Below is an example
+
+```kotlin
+// inside Application.kt
+
+import TSAnalyticsManager
+
+class SampleApp: Application() {
+    override fun onCreate() {
+        super.onCreate()
+        TSAnalyticsManager.addPackage(TSAppsee("123SampleAPIKEY", mutableListOf(TSPIILevel.NOT_SENSITIVE), null))
+    }
+}
+```
+
+**And dont forget** inside your `AndroidManifest.xml` to tell Android to use your subclass of Application. Otherwise this will not work.
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.example.tdillman.testimportproject">
+    <!-- Don't forget to add 'android:name' to your manifest!!! -->
+    <application
+            android:name=".SampleApp"
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
+```
+
+## Tracking an event with TSAnalyticsManager <a name="tracking_event_tsanalyticsmanager"></a>
+
+Ensure that you have your packages setup before attempting the following...
+
+Now that you have everything setup, you can track an event. An event can be when a user registers, when they receive an network error, or if they visit some screen. Events can be almost anything you can imagine.
+
+To track an event you simply ask the TSAnalyticsManager to do so
+
+```kotlin
+// create an item to track with a PII level
+        val point = TSTrackableItem(key = "sampleItem", value = "someValue" as Any, level = TSPIILevel.NOT_SENSITIVE)
+        // create a trackable item with a set of values to track as an event
+        val trackable = TSTrackable(eventName = "sampleEventName", values = mutableListOf(point))
+        // pass the trackable item to the package manager and let all the packages know an event needs to be recorded
+        TSAnalyticsManager.track(trackable)
+```
 
 # Sample <a name="sample"></a>
 
