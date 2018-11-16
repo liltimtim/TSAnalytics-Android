@@ -56,7 +56,7 @@ Then add the following to your App `build.gradle` file.
 ```gradle
   dependencies {
     ...
-    implementation 'com.github.liltimtim:TSAnalytics-Android:0.0.1'
+    implementation 'com.github.liltimtim:TSAnalytics-Android:0.0.3'
     ...
   }
 ```
@@ -216,8 +216,19 @@ override fun generate(item: TSTrackableData): Map<String, Any> {
 
 This now allows the generator to create a key, value pair. The reason why we must implement a generator per package is due to how certain packages handle the data. `Adobe` for example requires a different mapping structure than Appsee however since we want to unify the function signatures, we instead place the burden of implementation on the developer. This provides maximum flexibility in terms of what packages can be supported and prevents creating `one off` functions that are specific to a certain package.
 
+![yasss](https://i.imgflip.com/1u9mvz.jpg)
+
 ## Register TSAnalyticsWrapper subclass with TSPackageManager <a name="register_with_package_manager"></a>
+
+Its recommended by multiple analytics platforms that you instantiate the library outside of the normal activity lifecycle.
+
+You should use a subclasses version of `Application` to achieve this.
+
+Below is an example
 
 # Sample <a name="sample"></a>
 
 The following is a full implementation including the use of `TSAnalyticsManager` and a sample analytics package (Appsee)
+
+1. [Application.kt subclassing sample](https://github.com/liltimtim/TSAnalytics-Android/blob/master/examples/Application.kt)
+2. [Sample TSAppsee](https://github.com/liltimtim/TSAnalytics-Android/blob/master/examples/TSAppsee.kt)
