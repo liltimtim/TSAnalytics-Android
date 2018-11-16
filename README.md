@@ -27,7 +27,7 @@ Fabric.Answers.TrackActionEvent(name: "someEvent")
 
 Scary stuff, look at that code replication...
 
-![alt gross](https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjU-7Lfl9neAhWFdN8KHe1eDT0QjRx6BAgBEAU&url=https%3A%2F%2Fimgflip.com%2Fi%2F11xlu3&psig=AOvVaw2Ke21s8_if7uhple1tJEdk&ust=1542467057507902)
+![alt gross](https://imgflip.com/i/11xlu3)
 
 ### Reasoning
 
