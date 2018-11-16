@@ -39,27 +39,6 @@ In the following example we will be using `AppSee` Analytics as the package to g
 
 ### Subclassing TSAnalyticsWrapper and Implementing Interfaces
 
-The first step is to subclass `TSAnalyticsWrapper`
-
-```kotlin
-// import appsee
-import com.appsee.Appsee
-// import all the classes from TSAnalytics We will need
-import TSAnalyticsWrapper
-import TSUserTrackable
-import TSRecordable
-import TSActionTrackable
-import TSPIILevel
-import TSTrackable
-import TSTrackDataPoint
-import TSTrackableData
-
-class TSAppsee(override var _APIKey: String, override var handlesLevels: MutableList<TSPIILevel>,
-               override var byspassesLevels: MutableList<TSPIILevel>?) {
-
-}
-```
-
 Appsee supports the following capabilities
 
 1. TSUserTrackable
@@ -68,7 +47,7 @@ Appsee supports the following capabilities
 
 These are all interfaces that unify the function signatures of Appsee hence why we are wrapping the framework.
 
-The class should look as follows
+The first step is to subclass `TSAnalyticsWrapper`. Create Kotlin file `TSAppsee.kt`. The class should look as follows
 
 ```kotlin
 class TSAppsee(override var _APIKey: String, override var handlesLevels: MutableList<TSPIILevel>,
