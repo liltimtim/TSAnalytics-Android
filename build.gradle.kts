@@ -15,7 +15,7 @@ val dokkaJar by tasks.creating(Jar::class) {
  * user guide available at https://docs.gradle.org/4.10.2/userguide/java_library_plugin.html
  */
 
-version = "0.0.1"
+version = "0.0.4"
 group = "com.taxslayer"
 val dokka by tasks.getting(org.jetbrains.dokka.gradle.DokkaTask::class) {
     outputFormat = "html"
@@ -42,7 +42,7 @@ dependencies {
     api("org.apache.commons:commons-math3:3.6.1")
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
-    implementation("com.google.guava:guava:23.0")
+//    implementation("com.google.guava:guava:26.0")
 
     // Use JUnit test framework
     testImplementation("junit:junit:4.12")

@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TSAnalyticsAndroid.iml" filepath="$PROJECT_DIR$/TSAnalyticsAndroid.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TSAnalyticsAndroid_main.iml" filepath="$PROJECT_DIR$/.idea/modules/TSAnalyticsAndroid_main.iml" group="TSAnalyticsAndroid" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TSAnalyticsAndroid_test.iml" filepath="$PROJECT_DIR$/.idea/modules/TSAnalyticsAndroid_test.iml" group="TSAnalyticsAndroid" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/TSAnalytics-Android.iml" filepath="$PROJECT_DIR$/.idea/TSAnalytics-Android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TSAnalyticsAndroid.iml" filepath="$PROJECT_DIR$/.idea/modules/TSAnalyticsAndroid.iml" group="TSAnalyticsAndroid" />
     </modules>
   </component>
 </project>
