@@ -15,7 +15,7 @@ val dokkaJar by tasks.creating(Jar::class) {
  * user guide available at https://docs.gradle.org/4.10.2/userguide/java_library_plugin.html
  */
 
-version = "0.0.4"
+version = "0.0.5"
 group = "com.taxslayer"
 val dokka by tasks.getting(org.jetbrains.dokka.gradle.DokkaTask::class) {
     outputFormat = "html"

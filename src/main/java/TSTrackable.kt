@@ -31,3 +31,12 @@ public class TSTrackable(override var eventName: String, override var values: Mu
 public class TSTrackableItem(override var key: String,
                              override var value: Any?,
                              override var level: TSPIILevel): TSTrackDataPoint { }
+
+/**
+ * Use TSEventName to unify common events across all applications
+ */
+public enum class TSEventName(val eventName: String) {
+    USER_SIGNED_UP("user_signed_up"),
+    USER_LOGGED_IN("user_logged_in"),
+    USER_COMPLETED_ONBOARDING("user_completed_onboarding")
+}

@@ -1,3 +1,7 @@
+### Build Status
+[![Release](https://jitpack.io/v/liltimtim/TSAnalytics-Android.svg)](https://jitpack.io/liltimtim/TSAnalytics-Android)
+
+
 # Table of Contents
 
 1. [Introduction](#introduction)
